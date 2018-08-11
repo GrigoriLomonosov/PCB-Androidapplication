@@ -27,7 +27,8 @@
             >
         </activity>
         <activity android:name=".BlueToothActivity" />
-        <activity android:name=".NodeActivity"></activity>
+        <activity android:name=".NodeActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

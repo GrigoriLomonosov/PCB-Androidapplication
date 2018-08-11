@@ -15,6 +15,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="updateDate"
         android:text="@string/date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +27,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="updateTime"
         android:text="@string/time"
         app:layout_constraintStart_toEndOf="@+id/dateBtn"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,6 +39,7 @@
         android:layout_marginLeft="23dp"
         android:layout_marginStart="23dp"
         android:layout_marginTop="24dp"
+        android:onClick="goToSettings"
         android:text="@string/settings"
         app:layout_constraintStart_toEndOf="@+id/timeBtn"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,6 +76,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="updateVolume"
         android:text="@string/volume"
         app:layout_constraintBottom_toTopOf="@+id/divider4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,6 +123,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="updateIP"
         android:text="@string/range_ip_btn"
         app:layout_constraintStart_toEndOf="@+id/ipSpinner"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
@@ -154,6 +159,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="goToNodeControlPanel"
         android:text="@string/update_node"
         app:layout_constraintStart_toEndOf="@+id/nodeSpinner"
         app:layout_constraintTop_toBottomOf="@+id/divider5" />
@@ -179,6 +185,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="uploadFile"
         android:text="@string/upload_file"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider6" />
@@ -190,6 +197,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="goToBlueToothActivity"
         android:text="@string/connect_bluetooth"
         app:layout_constraintStart_toEndOf="@+id/uploadBtn"
         app:layout_constraintTop_toBottomOf="@+id/divider6" />
@@ -201,6 +209,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:onClick="reset"
         android:text="@string/reset"
         app:layout_constraintStart_toEndOf="@+id/blueToothBtn"
         app:layout_constraintTop_toBottomOf="@+id/divider6" />
