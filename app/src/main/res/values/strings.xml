@@ -10,4 +10,9 @@
     <string name="upload_file">Upload</string>
     <string name="connect_bluetooth">BT Connect</string>
     <string name="reset">Reset</string>
+    <string name="find_free_ip">Find free IP</string>
+    <string name="update_ip">Update IP</string>
+    <string name="set_min_cap_vol">Set min vol</string>
+    <string name="set_min_time_finish">Set time for finish</string>
+    <string name="set_min_time_compare">Set time for compare</string>
 </resources>

@@ -143,7 +143,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ipBtn" />
 
     <Spinner
-        android:id="@+id/nodeSpinner"
+        android:id="@+id/minCapVolSpinner"
         android:layout_width="95dp"
         android:layout_height="37dp"
         android:layout_marginLeft="24dp"
@@ -161,7 +161,7 @@
         android:layout_marginTop="24dp"
         android:onClick="goToNodeControlPanel"
         android:text="@string/update_node"
-        app:layout_constraintStart_toEndOf="@+id/nodeSpinner"
+        app:layout_constraintStart_toEndOf="@+id/minCapVolSpinner"
         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
     <View

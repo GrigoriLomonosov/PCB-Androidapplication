@@ -2,6 +2,7 @@ package com.example.tac.boardcommunicator;
 
 import android.content.Intent;
 import android.nfc.Tag;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToSettings(View view){
         Log.d("test", "settings: pressed");
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     /**
