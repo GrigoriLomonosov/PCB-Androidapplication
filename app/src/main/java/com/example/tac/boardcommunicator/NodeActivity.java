@@ -45,7 +45,7 @@ public class NodeActivity extends AppCompatActivity {
     public void setMinTimeForCompare(View view) {
         Log.d(TAG, "setMinTimeForCompare: pressed");
     }
-    
+
     public void reset(View view) {
         Log.d(TAG, "reset: pressed");
     }

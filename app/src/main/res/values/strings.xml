@@ -15,4 +15,7 @@
     <string name="set_min_cap_vol">Set min vol</string>
     <string name="set_min_time_finish">Set time for finish</string>
     <string name="set_min_time_compare">Set time for compare</string>
+    <string name="open_BT">Open</string>
+    <string name="close_BT">Close</string>
+    <string name="send_BT">Send</string>
 </resources>

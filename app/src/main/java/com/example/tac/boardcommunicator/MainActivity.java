@@ -1,8 +1,6 @@
 package com.example.tac.boardcommunicator;
 
 import android.content.Intent;
-import android.nfc.Tag;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToBlueToothActivity(View view) {
         Log.d("test", "BT: pressed");
-        Intent intent = new Intent(this, BlueToothActivity.class);
+        Intent intent = new Intent(this, Devices.class);
         startActivity(intent);
     }
 
@@ -97,11 +95,4 @@ public class MainActivity extends AppCompatActivity {
         Log.d("test", "uploadFile: pressed");
     }
 
-    public void sendMessage(View view){
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.editText4);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
 }
