@@ -51,6 +51,7 @@ public class Devices extends AppCompatActivity implements
     private TextView device_address;
     private TextView result_text;
 
+    // Currently connected device TODO dit kan hier wsh nog properder
     private BluetoothDevice device;
 
     // The Bluetooth service
@@ -137,12 +138,27 @@ public class Devices extends AppCompatActivity implements
 
     public void connectToBT(View view){
         Log.d(TAG, "connectToBT: pressed");
-        service.connectToBT();
+        if(service.connectToBT()){
+            result_text.setText("Connection successfull");
+        }
+        else{
+            if(device == null){
+                result_text.setText("Please select a device before connecting");
+            }
+            else {
+                result_text.setText("Connection failed: try disconnecting before connecting again");
+            }
+        }
     }
 
     public void disconnectFromBT(View view){
         Log.d(TAG, "disconnectFromBT: pressed");
-        service.disconnectFromBT();
+        if(service.disconnectFromBT()){
+            result_text.setText("No more connections: disconnection successfull");
+        }
+        else{
+            result_text.setText("Disconnection failed");
+        }
     }
 /*
     *//**

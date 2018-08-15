@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +16,7 @@ import java.util.UUID;
 
 public class BluetoothService {
 
-    //TODO TESTfield
+    //TODO Remove: testfield for logging
     private String TAG = "test";
 
     // Standard UUID
@@ -51,6 +50,10 @@ public class BluetoothService {
         deviceArr = setToArr(devices);
     }
 
+    /**
+     * Returns the singleton running all the code handling the Bluetooth connection
+     * @return The singleton handling the Bluetooth connection
+     */
     public static BluetoothService getInstance(){
         if (INSTANCE == null) {
             INSTANCE = new BluetoothService();
@@ -58,6 +61,10 @@ public class BluetoothService {
         return(INSTANCE);
     }
 
+    /**
+     * An array holding all the devices recognized by this device
+     * @return array holding the recognized devices
+     */
     public BluetoothDevice[] getDevices(){
         return deviceArr;
     }
@@ -73,8 +80,9 @@ public class BluetoothService {
 
     /**
      * Connects the application to the selected Bluetooth device. Connection is only possible when there is not yet a connection established and a device selected
+     * @return true if the connection succeeded, false otherwise
      */
-    public void connectToBT(){
+    public boolean connectToBT(){
         if (device != null && connectThread == null){
             connectThread = new ConnectThread(device);
             connectThread.run();
@@ -88,23 +96,18 @@ public class BluetoothService {
                     connectedThreadRead.run();
                 }
             });
+            return true;
         }
         else{
-            Log.d(TAG, "connectToBT: Connect to BT failed");
-            if (connectThread != null) {
-                //result_text.setText("Already connected to a device. Disconnect before trying to connect again.");
-            }
-            else if(device == null){
-                //result_text.setText("Please select a device before trying to connect.");
-            }
-            //TODO write alert to tell users to select a device
+            return false;
         }
     }
 
     /**
      * Disconnects the application from the current Bluetooth device.
+     * @return True if the bluetooth connection was stopped, false otherwise
      */
-    public void disconnectFromBT(){
+    public boolean disconnectFromBT(){
         //Stop connection thread
         if(connectThread != null){
             connectThread.cancel();
@@ -121,8 +124,9 @@ public class BluetoothService {
         }
         connectedThreadWrite = null;
         if(connectThread == null && connectedThreadRead == null && connectedThreadWrite == null){
-            //result_text.setText("No more connections: disconnection successfull");
+            return true;
         }
+        return false;
     }
 
     public String read(){

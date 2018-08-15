@@ -12,6 +12,8 @@ public class NodeActivity extends AppCompatActivity {
     
     private String TAG = "test";
 
+    private final BluetoothService bluetoothService = BluetoothService.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

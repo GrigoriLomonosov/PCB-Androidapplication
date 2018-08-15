@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private final BluetoothService bluetoothService = BluetoothService.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
