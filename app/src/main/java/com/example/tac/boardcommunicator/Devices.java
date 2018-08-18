@@ -43,7 +43,7 @@ public class Devices extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener{
 
     // Standard UUID
-    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    //static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // Layout fields
     private String TAG = "test";

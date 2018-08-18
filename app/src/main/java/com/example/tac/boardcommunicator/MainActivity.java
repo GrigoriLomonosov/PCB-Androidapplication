@@ -9,9 +9,15 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = "test";
+
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
+    // Service necessary to handle bluetooth communication
     private final BluetoothService bluetoothService = BluetoothService.getInstance();
+
+    // Handles data processing in application
+    private final DataProcessor dataProcessor = new DataProcessor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
      */
     public void updateVolume(View view) {
         Log.d("test", "update volume: pressed");
+        bluetoothService.write(null);
+        Log.d(TAG, "updateVolume1: " + dataProcessor.toRead());
+        Log.d(TAG, "updateVolume2: " + dataProcessor.findFreeIp());
+        try {
+            Log.d(TAG, "updateVolume3: " + dataProcessor.createArpMap().size());
+        }
+        catch (Exception e){
+            Log.d(TAG, "updateVolume: fuk");
+        }
+        
     }
 
     /**
@@ -63,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void updateTime(View view) {
         Log.d("test", "updateTime: pressed");
+        //TODO hier is iets mis: null pointer Log.d(TAG, "updateTime: " +  bluetoothService.read().length);
     }
 
     /**

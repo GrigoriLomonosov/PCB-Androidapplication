@@ -10,6 +10,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -18,6 +19,12 @@ public class BluetoothService {
 
     //TODO Remove: testfield for logging
     private String TAG = "test";
+
+    // The encoding used in the writing
+    private final String encoding = "UTF-8";
+
+    // The size of the buffer who receives messages from the board
+    private final int bufferSize = 1024;
 
     // Standard UUID
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -36,6 +43,9 @@ public class BluetoothService {
     private ConnectThread connectThread;
     private ConnectedThread connectedThreadRead;
     private ConnectedThread connectedThreadWrite;
+
+    // Variable for activities to know if the application is already connected through bluetooth TODO checken of het nodig is
+    private boolean isConnected = false;
 
     private BluetoothService() {
         myBluetooth = BluetoothAdapter.getDefaultAdapter();
@@ -77,7 +87,6 @@ public class BluetoothService {
         return device;
     }
 
-
     /**
      * Connects the application to the selected Bluetooth device. Connection is only possible when there is not yet a connection established and a device selected
      * @return true if the connection succeeded, false otherwise
@@ -88,14 +97,14 @@ public class BluetoothService {
             connectThread.run();
             connectedThreadRead = new ConnectedThread();
             connectedThreadWrite = new ConnectedThread();
-            //result_text.setText("Connection successfull");
-            //Start listening in the background to the connected device
+            //TODO deze weer inschakelen om te readen
+            /*//Start listening in the background to the connected device
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
                     connectedThreadRead.run();
                 }
-            });
+            });*/
             return true;
         }
         else{
@@ -129,21 +138,21 @@ public class BluetoothService {
         return false;
     }
 
-    public String read(){
-        //TODO Hoe gaan we dat oplossen
-        String result = "";
-        if(connectedThreadRead == null){
-            //result_text.setText("Please connect before trying to read");
-        }
-        else{
-            //result = new String(connectedThreadRead.read());
-            //result_text.setText(result);
-        }
-        return result;
+    public byte[] read(){
+        return connectedThreadRead.read();
     }
 
-    public void write(String message){
-
+    public boolean write(byte[] byteArr){
+        String text = "START";
+        try{
+            byte[] bytes = text.getBytes("UTF-8");
+            connectedThreadRead.write(bytes);
+        }
+        catch (UnsupportedEncodingException e){
+            Log.d(TAG, "write: " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 
 
@@ -209,7 +218,6 @@ public class BluetoothService {
      * Handles the sending and receiving of data to/from the Bluetooth device
      */
     private class ConnectedThread extends Thread {
-        private final int buffersize = 256;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
         private byte[] mmBuffer; // mmBuffer store for the stream
@@ -234,12 +242,29 @@ public class BluetoothService {
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
+        
+        public byte[] read(){
+            byte[] buffer = new byte[bufferSize];
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        mmInStream.read(mmBuffer);
+                    }
+                    catch (IOException e) {
+                        Log.d(TAG, "read: failed in ConnectedThread");
+                    }
+
+                }
+            });
+            return mmBuffer;
+        }
 
         /**
          * Listens to the connected Bluetooth device for incoming messages.
          */
         public void run() {
-            mmBuffer = new byte[buffersize];
+            mmBuffer = new byte[bufferSize];
 
             // Keep listening to the InputStream until an exception occurs.
             while (true) {
@@ -258,7 +283,7 @@ public class BluetoothService {
 
         // Call this from the main activity to send data to the remote device.
         public void write(byte[] bytes) {
-            Log.d(TAG, "write: in write111111111111111111111111111111111");
+            Log.d(TAG, "write: ");
             try {
                 mmOutStream.write(bytes);
                 Log.d(TAG, "write: written to temp output");
