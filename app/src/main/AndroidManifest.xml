@@ -50,7 +50,11 @@
                 android:value=".MainActivity" />
             >
         </activity>
-        <activity android:name=".Devices"></activity>
+        <activity android:name=".Devices" />
+        <activity
+            android:name=".TabbedActivity"
+            android:label="@string/title_activity_tabbed"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void updateTime(View view) {
-        Log.d("test", "updateTime: pressed");
         //TODO hier is iets mis: null pointer Log.d(TAG, "updateTime: " +  bluetoothService.read().length);
     }
 
@@ -88,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void updateDate(View view) {
         Log.d("test", "updateDate: pressed");
+        Intent intent = new Intent(this, TabbedActivity.class);
+        startActivity(intent);
     }
 
     /**
