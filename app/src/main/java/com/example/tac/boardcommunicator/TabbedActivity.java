@@ -81,6 +81,8 @@ public class TabbedActivity extends AppCompatActivity implements BluetoothFragme
         });
     }
 
+
+
     @Override
     public void onBluetoothSelected(){
         //TODO change this method to communicate with Bluetoothfragment
@@ -141,7 +143,7 @@ public class TabbedActivity extends AppCompatActivity implements BluetoothFragme
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return BluetoothFragment.newInstance("test","test");
+                    return BluetoothFragment.newInstance();
                 case 1:
                     return MainControlFragment.newInstance("","");
                 case 2:
