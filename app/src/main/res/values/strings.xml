@@ -25,4 +25,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_test_tabbed">TestTabbed</string>
+    <string name="ready_to_connect">Ready to connect</string>
+    <string name="read_ip">Read IP</string>
+    <string name="read_ssid">Read SSID</string>
+    <string name="read_pasword">Read password</string>
+    <string name="result">Result:</string>
+    <string name="set_ip">Set IP</string>
 </resources>

@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToBlueToothActivity(View view) {
         Log.d("test", "BT: pressed");
-        Intent intent = new Intent(this, Devices.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, Devices.class);
+        //startActivity(intent);
     }
 
     /**

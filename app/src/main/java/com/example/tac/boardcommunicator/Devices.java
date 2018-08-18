@@ -39,13 +39,13 @@ import java.util.UUID;
 /**
  * Searches for Bluetooth devices and allows connection and disconnection of a selected device
  */
-public class Devices extends AppCompatActivity implements
-        AdapterView.OnItemSelectedListener{
+public class Devices extends AppCompatActivity{// implements
+        //AdapterView.OnItemSelectedListener{
 
     // Standard UUID
     //static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    // Layout fields
+/*    // Layout fields
     private String TAG = "test";
     private TextView device_name;
     private TextView device_address;
@@ -57,7 +57,7 @@ public class Devices extends AppCompatActivity implements
     // The Bluetooth service
     private final BluetoothService service = BluetoothService.getInstance();
 
-/*    // Bluetooth fields
+*//*    // Bluetooth fields
     private Set<BluetoothDevice> devices = new HashSet<>();
     private BluetoothDevice[] deviceArr;
     private BluetoothDevice device;
@@ -67,10 +67,10 @@ public class Devices extends AppCompatActivity implements
     // Keeps track of currently running threads
     private ConnectThread connectThread;
     private ConnectedThread connectedThreadRead;
-    private ConnectedThread connectedThreadWrite;*/
+    private ConnectedThread connectedThreadWrite;*//*
 
     // Create a BroadcastReceiver for ACTION_FOUND of new devices.
-    /*private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    *//*private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
@@ -80,13 +80,13 @@ public class Devices extends AppCompatActivity implements
                 //TODO handle discovery of new objects
             }
         }
-    };*/
+    };*//*
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         // Make objects necessary for BT-connection and fill devices array
-       /* myBluetooth = BluetoothAdapter.getDefaultAdapter();
+       *//* myBluetooth = BluetoothAdapter.getDefaultAdapter();
         if ( myBluetooth==null ) {
             Log.d(TAG, "onCreate: BTAdapter niet gevonden");
 
@@ -97,12 +97,12 @@ public class Devices extends AppCompatActivity implements
         }
         //TODO fill the devices array
         devices = myBluetooth.getBondedDevices();
-        deviceArr = setToArr(devices);*/
+        deviceArr = setToArr(devices);*//*
 
         // Register for broadcasts when a device is discovered. TODO
         // Register for broadcasts when a device is discovered.
-       /* IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(mReceiver, filter);*/
+       *//* IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(mReceiver, filter);*//*
 
         setContentView(R.layout.activity_devices);
 
@@ -159,7 +159,7 @@ public class Devices extends AppCompatActivity implements
         else{
             result_text.setText("Disconnection failed");
         }
-    }
+    }*/
 /*
     *//**
      * Connects the application to the selected Bluetooth device. Connection is only possible when there is not yet a connection established and a device selected

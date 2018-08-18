@@ -31,9 +31,16 @@ public class BluetoothFragment extends Fragment implements
     private TextView device_name;
     private TextView device_address;
     private TextView result_text;
+    private Button connectBtn;
+    private Button disconnectBtn;
+    private Button readIPBtn;
+    private Button readSSIDBtn;
+    private Button readPWBtn;
+    private Button findFreeIpBtn;
+    private Button setIPBtn;
 
     // Currently connected device TODO dit kan hier wsh nog properder
-    private BluetoothDevice device;
+    //private BluetoothDevice device;
 
     private final BluetoothService bluetoothService = BluetoothService.getInstance();
 
@@ -79,8 +86,15 @@ public class BluetoothFragment extends Fragment implements
         ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_item,bluetoothService.getDevices());
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         s.setAdapter(aa);
-        final Button connectBtn = (Button) view.findViewById(R.id.connectBtn);
-        final Button disconnectBtn = (Button) view.findViewById(R.id.disconnectBtn);
+
+        //Buttons
+        connectBtn = (Button) view.findViewById(R.id.connectBtn);
+        disconnectBtn = (Button) view.findViewById(R.id.disconnectBtn);
+        readIPBtn = (Button) view.findViewById(R.id.readIPBtn);
+        readSSIDBtn = (Button) view.findViewById(R.id.readSSIDBtn);
+        readPWBtn = (Button) view.findViewById(R.id.readPwBtn);
+        findFreeIpBtn = (Button) view.findViewById(R.id.findFreeIP);
+        setIPBtn = (Button) view.findViewById(R.id.setIP);
 
         // Set the listeners for the buttons
         connectBtn.setOnClickListener(new View.OnClickListener()
@@ -96,6 +110,41 @@ public class BluetoothFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 disconnectFromBT(v);
+            }
+        });
+
+        readIPBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                readIP(v);
+            }
+        });
+
+        readSSIDBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readSSID(v);
+            }
+        });
+
+        readPWBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readPassword(v);
+            }
+        });
+
+        findFreeIpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findFreeIP(v);
+            }
+        });
+
+        setIPBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setIP(v);
             }
         });
 
@@ -132,11 +181,12 @@ public class BluetoothFragment extends Fragment implements
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
         Log.d(TAG, "onItemSelected: in selecter");
-        device = bluetoothService.getDevices()[position];
-        bluetoothService.setDevice(device);
-        if(device != null){
-            device_address.setText(device.getAddress());
-            device_name.setText(device.getName());
+        //device =
+        bluetoothService.setDevice(bluetoothService.getDevices()[position]);
+        //bluetoothService.setDevice(device);
+        if(bluetoothService.getDevice() != null){
+            device_address.setText(bluetoothService.getDevice().getAddress());
+            device_name.setText(bluetoothService.getDevice().getName());
         }
     }
 
@@ -156,7 +206,7 @@ public class BluetoothFragment extends Fragment implements
             result_text.setText("Connection successfull");
         }
         else{
-            if(device == null){
+            if(bluetoothService.getDevice() == null){
                 result_text.setText("Please select a device before connecting");
             }
             else {
@@ -177,6 +227,31 @@ public class BluetoothFragment extends Fragment implements
         else{
             result_text.setText("Disconnection failed");
         }
+    }
+
+    private void readIP(View view){
+        Log.d(TAG, "readIP: pressed");
+        //TODO
+    }
+
+    private void readSSID(View view){
+        Log.d(TAG, "readSSID: pressed");
+        //TODO
+    }
+
+    private void readPassword(View view){
+        Log.d(TAG, "readPassword: pressed");
+        //TODO
+    }
+
+    private void findFreeIP(View view){
+        Log.d(TAG, "findFreeIP: pressed");
+        //TODO
+    }
+
+    private void setIP(View view){
+        Log.d(TAG, "setIP: pressed");
+        //TODO
     }
 
     /**
