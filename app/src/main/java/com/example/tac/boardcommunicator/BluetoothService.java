@@ -32,6 +32,9 @@ public class BluetoothService {
     // Static field to allow for the SINGLETON design pattern
     private static BluetoothService INSTANCE = null;
 
+    // Handles processing of different types of data
+    private final DataProcessor dataProcessor = new DataProcessor();
+
     // Bluetooth fields
     private Set<BluetoothDevice> devices = new HashSet<>();
     private BluetoothDevice[] deviceArr;
@@ -142,7 +145,7 @@ public class BluetoothService {
         return connectedThreadRead.read();
     }
 
-    public boolean write(byte[] byteArr){
+    private boolean write(byte[] byteArr){
         String text = "START";
         try{
             byte[] bytes = text.getBytes("UTF-8");
@@ -152,6 +155,56 @@ public class BluetoothService {
             Log.d(TAG, "write: " + e.getMessage());
             return false;
         }
+        return true;
+    }
+
+    /**
+     * Returns a free ip-address in the current network
+     * @return an available ip-address
+     */
+    public String findFreeIP(){
+        return dataProcessor.findFreeIp();
+    }
+
+    /**
+     * Sets the ip of the device to the given ip
+     * @param ip to new ip-address
+     * @return true if the IP was changed correctly, false otherwise
+     */
+    public boolean setIP(String ip){
+        //TODO
+        return true;
+    }
+
+    /**
+     * Returns the password
+     * @return
+     */
+    public String readPW(){
+        //TODO
+        return "paswoord";
+    }
+
+    /**
+     * Returns the current SSID
+     * @return
+     */
+    public String readSSID(){
+        //TODO
+        return "SSID";
+    }
+
+    /**
+     * Reads the current ip of the device
+     * @return
+     */
+    public String readIP(){
+        //TODO
+        return "IP";
+    }
+
+    public boolean checkIPFormat(String ip){
+        //TODO
         return true;
     }
 

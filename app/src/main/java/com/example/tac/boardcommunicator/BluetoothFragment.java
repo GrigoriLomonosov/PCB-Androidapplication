@@ -30,6 +30,7 @@ public class BluetoothFragment extends Fragment implements
     private String TAG = "test";
     private TextView device_name;
     private TextView device_address;
+    private TextView bt_result_text;
     private TextView result_text;
     private Button connectBtn;
     private Button disconnectBtn;
@@ -80,7 +81,8 @@ public class BluetoothFragment extends Fragment implements
         // Set the layout
         device_name = (TextView) view.findViewById(R.id.device_name);
         device_address = (TextView) view.findViewById(R.id.device_address);
-        result_text = (TextView) view.findViewById(R.id.BT_result_text);
+        result_text = (TextView) view.findViewById(R.id.resultText);
+        bt_result_text = (TextView) view.findViewById(R.id.BT_result_text);
         Spinner s = (Spinner) view.findViewById(R.id.BTSpinner);
         s.setOnItemSelectedListener(this);
         ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_item,bluetoothService.getDevices());
@@ -181,9 +183,7 @@ public class BluetoothFragment extends Fragment implements
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
         Log.d(TAG, "onItemSelected: in selecter");
-        //device =
         bluetoothService.setDevice(bluetoothService.getDevices()[position]);
-        //bluetoothService.setDevice(device);
         if(bluetoothService.getDevice() != null){
             device_address.setText(bluetoothService.getDevice().getAddress());
             device_name.setText(bluetoothService.getDevice().getName());
@@ -203,14 +203,14 @@ public class BluetoothFragment extends Fragment implements
     private void connectToBT(View view){
         Log.d(TAG, "connectToBT: pressed");
         if(bluetoothService.connectToBT()){
-            result_text.setText("Connection successfull");
+            bt_result_text.setText("Connection successfull");
         }
         else{
             if(bluetoothService.getDevice() == null){
-                result_text.setText("Please select a device before connecting");
+                bt_result_text.setText("Please select a device before connecting");
             }
             else {
-                result_text.setText("Connection failed: try disconnecting before connecting again");
+                bt_result_text.setText("Connection failed: try disconnecting before connecting again");
             }
         }
     }
@@ -222,36 +222,67 @@ public class BluetoothFragment extends Fragment implements
     private void disconnectFromBT(View view){
         Log.d(TAG, "disconnectFromBT: pressed");
         if(bluetoothService.disconnectFromBT()){
-            result_text.setText("No more connections: disconnection successfull");
+            bt_result_text.setText("No more connections: disconnection successfull");
         }
         else{
-            result_text.setText("Disconnection failed");
+            bt_result_text.setText("Disconnection failed");
         }
     }
 
+    /**
+     * Reads the current ip-address from the device
+     * @param view
+     */
     private void readIP(View view){
         Log.d(TAG, "readIP: pressed");
-        //TODO
+        result_text.setText(bluetoothService.readIP());
     }
 
+    /**
+     * Reads the current SSID from the device
+     * @param view
+     */
     private void readSSID(View view){
         Log.d(TAG, "readSSID: pressed");
-        //TODO
+        result_text.setText(bluetoothService.readSSID());
     }
 
+    /**
+     * Reads the current password
+     * @param view
+     */
     private void readPassword(View view){
         Log.d(TAG, "readPassword: pressed");
-        //TODO
+        result_text.setText(bluetoothService.readPW());
     }
 
+    /**
+     * Finds a free ip-address in the network
+     * @param view
+     */
     private void findFreeIP(View view){
         Log.d(TAG, "findFreeIP: pressed");
-        //TODO
+        result_text.setText(bluetoothService.findFreeIP());
     }
 
+    /**
+     * Sets the ip-address to the one currently in a textfield. When format is not correct, nothing happens
+     * @param view
+     */
     private void setIP(View view){
         Log.d(TAG, "setIP: pressed");
-        //TODO
+        String ip = result_text.getText().toString();
+        if(bluetoothService.checkIPFormat(ip)){
+            if(bluetoothService.setIP(ip)){
+                result_text.setText("IP changed successfully");
+            }
+            else{
+                result_text.setText("IP change failed, please try again");
+            }
+        }
+        else{
+            result_text.setText("IP not in the correct format");
+        }
     }
 
     /**
