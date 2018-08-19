@@ -170,41 +170,61 @@ public class BluetoothService {
      * Sets the ip of the device to the given ip
      * @param ip to new ip-address
      * @param cmd the basic command to send to the device
-     * @return true if the IP was changed correctly, false otherwise
+     * @return a string holding a response from the device
      */
-    public boolean setIP(String ip, String cmd){
-        if (dataProcessor.checkIPFormat(ip)){
-            String processedCmd = start + cmd.replaceAll(" ", "") + dataProcessor.ip2Hex(ip) + dummies;
-            Log.d(TAG, "setIP: " + processedCmd);
-            try{
-                Log.d(TAG, "setIP: here");
-                write(processedCmd.getBytes("UTF-8"));
+    public String setIP(String ip, String cmd){
+        String reply = "Set IP failed: nothing happened";
+        if(isConnected()){
+            if (dataProcessor.checkIPFormat(ip)){
+                String processedCmd = start + cmd.replaceAll(" ", "") + dataProcessor.ip2Hex(ip) + dummies;
+                Log.d(TAG, "setIP: " + processedCmd);
+                try{
+                    Log.d(TAG, "setIP: here");
+                    write(processedCmd.getBytes("UTF-8"));
+                }
+                catch (Exception e){
+                    reply = "Could not write: " + e.getMessage();
+                    Log.d(TAG, "setIP: " + e.getMessage());
+                }
+                reply = "Set IP succeeded";
             }
-            catch (Exception e){
-                Log.d(TAG, "setIP: " + e.getMessage());
+            else{
+                reply = "IP is not in the correct format";
             }
-            return true;
         }
         else{
-            return false;
+            reply = "Connect a device before changing the IP";
         }
+        return reply;
     }
 
     /**
      * Returns the password
      * @return
      */
-    public String readPW(){
-        //TODO
-        return "paswoord";
+    public String readPW(String cmd){
+        String processedCmd = start + cmd.replaceAll(" ", "");
+        try{
+            write(processedCmd.getBytes("UTF-8"));
+        }
+        catch (Exception e){
+            Log.d(TAG, "readpasword: " + e.getMessage());
+        }
+        return "pasword";
     }
 
     /**
      * Returns the current SSID
      * @return
      */
-    public String readSSID(){
-        //TODO
+    public String readSSID(String cmd){
+        String processedCmd = start + cmd.replaceAll(" ", "");
+        try{
+            write(processedCmd.getBytes("UTF-8"));
+        }
+        catch (Exception e){
+            Log.d(TAG, "readSSID: " + e.getMessage());
+        }
         return "SSID";
     }
 
@@ -212,9 +232,16 @@ public class BluetoothService {
      * Reads the current ip of the device
      * @return
      */
-    public String readIP(){
-        //TODO
-        return "IP";
+    public String readIP(String cmd){
+        String processedCmd = start + cmd.replaceAll(" ", "");
+        try{
+            Log.d(TAG, "readip: here");
+            write(processedCmd.getBytes("UTF-8"));
+        }
+        catch (Exception e){
+            Log.d(TAG, "readip: " + e.getMessage());
+        }
+        return "123.124.125.255";
     }
 
     private void write(byte[] byteArr){

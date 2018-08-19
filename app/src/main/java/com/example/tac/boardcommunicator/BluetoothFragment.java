@@ -235,7 +235,7 @@ public class BluetoothFragment extends Fragment implements
      */
     private void readIP(View view){
         Log.d(TAG, "readIP: pressed");
-        result_text.setText(bluetoothService.readIP());
+        result_text.setText(bluetoothService.readIP(getResources().getString(R.string.cmd_readip)));
     }
 
     /**
@@ -244,7 +244,7 @@ public class BluetoothFragment extends Fragment implements
      */
     private void readSSID(View view){
         Log.d(TAG, "readSSID: pressed");
-        result_text.setText(bluetoothService.readSSID());
+        result_text.setText(bluetoothService.readSSID(getResources().getString(R.string.cmd_readssid)));
     }
 
     /**
@@ -253,7 +253,7 @@ public class BluetoothFragment extends Fragment implements
      */
     private void readPassword(View view){
         Log.d(TAG, "readPassword: pressed");
-        result_text.setText(bluetoothService.readPW());
+        result_text.setText(bluetoothService.readPW(getResources().getString(R.string.cmd_readpasword)));
     }
 
     /**
@@ -270,20 +270,9 @@ public class BluetoothFragment extends Fragment implements
      * @param view
      */
     private void setIP(View view){
-        if(bluetoothService.isConnected()){
-            Log.d(TAG, "setIP: pressed");
-            String ip = result_text.getText().toString().trim();
-            if(bluetoothService.setIP("123.123.123.132", getResources().getString(R.string.cmd_changeip))){
-                result_text.setText("IP changed successfully");
-            }
-            else {
-                result_text.setText("IP change failed, check the format of the IP and try again");
-            }
-        }
-        else{
-            result_text.setText("Connect a device before changing the IP");
-        }
-
+        Log.d(TAG, "setIP: pressed");
+        String ip = result_text.getText().toString().trim();
+        result_text.setText(bluetoothService.setIP("123.123.123.132", getResources().getString(R.string.cmd_changeip)));
     }
 
     /**
