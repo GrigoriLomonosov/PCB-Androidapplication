@@ -25,6 +25,15 @@ public class DataProcessor {
     String[] args = {"cat", "/proc/net/arp"};
 
     /**
+     * Returns true if the given string is a possible IPv4-string
+     * @param ip
+     * @return true if correct IPv4 string, false otherwise
+     */
+    public boolean checkIPFormat(String ip){
+        return true;
+    }
+
+    /**
      * Returns the first free dynamic IP in the current network
      * @return The first free IP in the network
      */
@@ -41,10 +50,11 @@ public class DataProcessor {
             e.printStackTrace();
 
         }
-        return total;
+        //return total;
+        return "198.162.14.90";
     }
 
-    public Map<String, String> createArpMap() throws IOException, InterruptedException {
+   /* public Map<String, String> createArpMap() throws IOException, InterruptedException {
         checkMapARP.clear();
         BufferedReader localBufferdReader = new BufferedReader(new FileReader(new File("/proc/net/arp")));
         String line = "";
@@ -89,7 +99,7 @@ public class DataProcessor {
             ex.printStackTrace();
         }
         return result;
-    }
+    }*/
 
     public void methode4(){
         /*String   s_dns1 ;
@@ -152,5 +162,44 @@ public class DataProcessor {
                 ((i >> 8 ) & 0xFF) + "." +
                 ((i >> 16) & 0xFF) + "." +
                 ((i >> 24) & 0xFF);
+    }
+
+    /**
+     * Takes a string and transforms it to a byte array.
+     * @param hexInput The input string should be in hexadecimal format
+     * @return a bytearray for the hexvalues in the hexInput
+     */
+    public byte[] stringToByte(String hexInput){
+        int len = hexInput.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(hexInput.charAt(i), 16) << 4)
+                    + Character.digit(hexInput.charAt(i+1), 16));
+        }
+        return data;
+    }
+
+    /**
+     * Returns a string holding the ip-address in hex-format
+     * @param reqIpAddr the given ip-address should be in the following format xxx.xxx.xxx.xxx
+     * @return a string in the following format xxxxxxxx
+     */
+    public String ip2Hex(String reqIpAddr) {
+        String hex = "";
+        String[] part = reqIpAddr.split("[\\.,]");
+        if (part.length < 4) {
+            return "00000000";
+        }
+        for (int i = 0; i < 4; i++) {
+            int decimal = Integer.parseInt(part[i]);
+            if (decimal < 16) // Append a 0 to maintian 2 digits for every
+            // number
+            {
+                hex += "0" + String.format("%01X", decimal);
+            } else {
+                hex += String.format("%01X", decimal);
+            }
+        }
+        return hex;
     }
 }

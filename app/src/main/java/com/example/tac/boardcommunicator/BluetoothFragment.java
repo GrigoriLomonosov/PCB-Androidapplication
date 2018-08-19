@@ -270,19 +270,20 @@ public class BluetoothFragment extends Fragment implements
      * @param view
      */
     private void setIP(View view){
-        Log.d(TAG, "setIP: pressed");
-        String ip = result_text.getText().toString();
-        if(bluetoothService.checkIPFormat(ip)){
-            if(bluetoothService.setIP(ip)){
+        if(bluetoothService.isConnected()){
+            Log.d(TAG, "setIP: pressed");
+            String ip = result_text.getText().toString().trim();
+            if(bluetoothService.setIP("123.123.123.132", getResources().getString(R.string.cmd_changeip))){
                 result_text.setText("IP changed successfully");
             }
-            else{
-                result_text.setText("IP change failed, please try again");
+            else {
+                result_text.setText("IP change failed, check the format of the IP and try again");
             }
         }
         else{
-            result_text.setText("IP not in the correct format");
+            result_text.setText("Connect a device before changing the IP");
         }
+
     }
 
     /**

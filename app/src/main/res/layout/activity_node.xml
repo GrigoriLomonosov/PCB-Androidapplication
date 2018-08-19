@@ -7,40 +7,14 @@
     tools:context=".NodeActivity">
 
     <Button
-        android:id="@+id/nodeTimeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="updateTime"
-        android:text="@string/time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/nodeDatebtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="updateDate"
-        android:text="@string/date"
-        app:layout_constraintStart_toEndOf="@+id/nodeTimeBtn"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/nodeFindIPBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:onClick="findFirstFreeIP"
         android:text="@string/find_free_ip"
-        app:layout_constraintStart_toEndOf="@+id/nodeDatebtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="224dp" />
 
     <View
         android:id="@+id/divider"
@@ -48,10 +22,10 @@
         android:layout_height="9dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nodeDatebtn" />
+        app:layout_constraintTop_toBottomOf="@+id/nodeFindIPBtn" />
 
     <EditText
         android:id="@+id/freeIPResultText"

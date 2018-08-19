@@ -22,7 +22,6 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_test_tabbed">TestTabbed</string>
     <string name="ready_to_connect">Ready to connect</string>
@@ -31,4 +30,27 @@
     <string name="read_pasword">Read password</string>
     <string name="result">Result:</string>
     <string name="set_ip">Set IP</string>
+
+    <!-- ACTIONS CMDS TO THE BOARD -->
+    <string name="cmd_test">01 04</string>
+    <string name="cmd_reset">02 04</string>
+    <string name="cmd_version">03 04</string>
+    <string name="cmd_netstatus">04 04</string>
+    <string name="cmd_server">05 04</string>
+    <string name="cmd_cfgbytes">06 %1$d %2$s</string>
+    <string name="cmd_readssid">07 04</string>
+    <string name="cmd_readpasword">08 04</string>
+    <string name="cmd_readip">09 04</string>
+    <string name="cmd_changeip">0a 08</string>
+    <string name="cmd_setminweight">10 06 %1$s</string>
+    <string name="cmd_readminweight">11 04</string>
+    <string name="cmd_setminweighttime">12 05 %1$s</string>
+    <string name="cmd_readminweighttime">13 04</string>
+    <string name="cmd_setmincomparetime">14 06 %1$s</string>
+    <string name="cmd_readmincomparetime">15 04</string>
+    <string name="cmd_setweightsteps">16 05 %1$s</string>
+    <string name="cmd_readweightsteps">17 04</string>
+    <string name="cmd_settimesteps">18 05 %1$s</string>
+    <string name="cmd_readtimesteps">19 04</string>
+
 </resources>

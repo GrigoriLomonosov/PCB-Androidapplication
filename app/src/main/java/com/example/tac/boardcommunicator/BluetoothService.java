@@ -3,7 +3,9 @@ package com.example.tac.boardcommunicator;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -19,6 +21,12 @@ public class BluetoothService {
 
     //TODO Remove: testfield for logging
     private String TAG = "test";
+
+    // This string is at the start of every command. It is the hex-string representation of START
+    private final String start = "5354415254";
+
+    // String representation of 2 dummy bytes
+    private final String dummies = "0000";
 
     // The encoding used in the writing
     private final String encoding = "UTF-8";
@@ -46,9 +54,6 @@ public class BluetoothService {
     private ConnectThread connectThread;
     private ConnectedThread connectedThreadRead;
     private ConnectedThread connectedThreadWrite;
-
-    // Variable for activities to know if the application is already connected through bluetooth TODO checken of het nodig is
-    private boolean isConnected = false;
 
     private BluetoothService() {
         myBluetooth = BluetoothAdapter.getDefaultAdapter();
@@ -145,17 +150,12 @@ public class BluetoothService {
         return connectedThreadRead.read();
     }
 
-    private boolean write(byte[] byteArr){
-        String text = "START";
-        try{
-            byte[] bytes = text.getBytes("UTF-8");
-            connectedThreadRead.write(bytes);
-        }
-        catch (UnsupportedEncodingException e){
-            Log.d(TAG, "write: " + e.getMessage());
-            return false;
-        }
-        return true;
+    /**
+     * Returns true if the bluetoothservice is capable of reading and writing to a certain device
+     * @return
+     */
+    public boolean isConnected(){
+        return connectedThreadWrite != null && connectedThreadWrite != null;
     }
 
     /**
@@ -169,11 +169,25 @@ public class BluetoothService {
     /**
      * Sets the ip of the device to the given ip
      * @param ip to new ip-address
+     * @param cmd the basic command to send to the device
      * @return true if the IP was changed correctly, false otherwise
      */
-    public boolean setIP(String ip){
-        //TODO
-        return true;
+    public boolean setIP(String ip, String cmd){
+        if (dataProcessor.checkIPFormat(ip)){
+            String processedCmd = start + cmd.replaceAll(" ", "") + dataProcessor.ip2Hex(ip) + dummies;
+            Log.d(TAG, "setIP: " + processedCmd);
+            try{
+                Log.d(TAG, "setIP: here");
+                write(processedCmd.getBytes("UTF-8"));
+            }
+            catch (Exception e){
+                Log.d(TAG, "setIP: " + e.getMessage());
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -203,9 +217,8 @@ public class BluetoothService {
         return "IP";
     }
 
-    public boolean checkIPFormat(String ip){
-        //TODO
-        return true;
+    private void write(byte[] byteArr){
+        connectedThreadRead.write(byteArr);
     }
 
 
@@ -334,9 +347,7 @@ public class BluetoothService {
             }
         }
 
-        // Call this from the main activity to send data to the remote device.
         public void write(byte[] bytes) {
-            Log.d(TAG, "write: ");
             try {
                 mmOutStream.write(bytes);
                 Log.d(TAG, "write: written to temp output");

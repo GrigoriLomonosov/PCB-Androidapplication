@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
     public void updateVolume(View view) {
         Log.d("test", "update volume: pressed");
         //bluetoothService.write(null);
-        Log.d(TAG, "updateVolume1: " + dataProcessor.toRead());
+        //Log.d(TAG, "updateVolume1: " + dataProcessor.toRead());
         Log.d(TAG, "updateVolume2: " + dataProcessor.findFreeIp());
         try {
-            Log.d(TAG, "updateVolume3: " + dataProcessor.createArpMap().size());
+            //Log.d(TAG, "updateVolume3: " + dataProcessor.createArpMap().size());
         }
         catch (Exception e){
             Log.d(TAG, "updateVolume: fuk");
