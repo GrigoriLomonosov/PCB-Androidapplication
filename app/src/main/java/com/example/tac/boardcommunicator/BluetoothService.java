@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,7 +30,10 @@ public class BluetoothService {
     private final String dummies = "0000";
 
     // The encoding used in the writing
-    private final String encoding = "UTF-8";
+    private final String encoding = "ASCII";
+
+    // The maximum delay before the device has to answer
+    private final int maxSleep = 150;
 
     // The size of the buffer who receives messages from the board
     private final int bufferSize = 1024;
@@ -105,14 +109,6 @@ public class BluetoothService {
             connectThread.run();
             connectedThreadRead = new ConnectedThread();
             connectedThreadWrite = new ConnectedThread();
-            //TODO deze weer inschakelen om te readen
-            /*//Start listening in the background to the connected device
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    connectedThreadRead.run();
-                }
-            });*/
             return true;
         }
         else{
@@ -146,16 +142,12 @@ public class BluetoothService {
         return false;
     }
 
-    public byte[] read(){
-        return connectedThreadRead.read();
-    }
-
     /**
      * Returns true if the bluetoothservice is capable of reading and writing to a certain device
      * @return
      */
     public boolean isConnected(){
-        return connectedThreadWrite != null && connectedThreadWrite != null;
+        return connectedThreadRead != null && connectedThreadWrite != null;
     }
 
     /**
@@ -180,7 +172,7 @@ public class BluetoothService {
                 Log.d(TAG, "setIP: " + processedCmd);
                 try{
                     Log.d(TAG, "setIP: here");
-                    write(processedCmd.getBytes("UTF-8"));
+                    write(processedCmd.getBytes(encoding));
                 }
                 catch (Exception e){
                     reply = "Could not write: " + e.getMessage();
@@ -205,7 +197,7 @@ public class BluetoothService {
     public String readPW(String cmd){
         String processedCmd = start + cmd.replaceAll(" ", "");
         try{
-            write(processedCmd.getBytes("UTF-8"));
+            write(processedCmd.getBytes(encoding));
         }
         catch (Exception e){
             Log.d(TAG, "readpasword: " + e.getMessage());
@@ -220,7 +212,7 @@ public class BluetoothService {
     public String readSSID(String cmd){
         String processedCmd = start + cmd.replaceAll(" ", "");
         try{
-            write(processedCmd.getBytes("UTF-8"));
+            write(processedCmd.getBytes(encoding));
         }
         catch (Exception e){
             Log.d(TAG, "readSSID: " + e.getMessage());
@@ -236,16 +228,36 @@ public class BluetoothService {
         String processedCmd = start + cmd.replaceAll(" ", "");
         try{
             Log.d(TAG, "readip: here");
-            write(processedCmd.getBytes("UTF-8"));
+            write(processedCmd.getBytes(encoding));
+            byte[] temp = read();
+            Log.d(TAG, "readIP: " + temp + ' ' + temp.toString());
+            if(new String(temp,encoding).contains("OKEND")){
+                return dataProcessor.byteArrayToStringIP(temp);
+            }
+            else{
+                return "Please try again, IP address not updated";
+            }
         }
         catch (Exception e){
             Log.d(TAG, "readip: " + e.getMessage());
         }
-        return "123.124.125.255";
+        return "Nothing received within the designated time.";
     }
 
     private void write(byte[] byteArr){
-        connectedThreadRead.write(byteArr);
+        connectedThreadWrite.write(byteArr);
+    }
+
+    private byte[] read() {
+        byte[] temp = new byte[bufferSize];
+        try{
+            Thread.sleep(maxSleep);
+            return connectedThreadRead.read();
+        }
+        catch(InterruptedException e){
+            Log.d(TAG, "read: " + e.getMessage());
+        }
+        return temp;
     }
 
 
@@ -313,7 +325,7 @@ public class BluetoothService {
     private class ConnectedThread extends Thread {
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
-        private byte[] mmBuffer; // mmBuffer store for the stream
+        private byte[] mmBuffer = new byte[bufferSize]; // mmBuffer store for the stream
 
         public ConnectedThread() {
             InputStream tmpIn = null;
@@ -335,9 +347,9 @@ public class BluetoothService {
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
-        
-        public byte[] read(){
-            byte[] buffer = new byte[bufferSize];
+
+       /* public byte[] read2(int numberOfBytes){
+            byte[] tempBuffer = new byte[numberOfBytes];
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -351,6 +363,42 @@ public class BluetoothService {
                 }
             });
             return mmBuffer;
+        }*/
+
+        public byte[] read(){
+            int treshHold = 0;
+            try{
+                while (mmInStream.available()==0 && treshHold<3000)
+                {
+                    Thread.sleep(1);
+                    treshHold++;
+                }
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                baos.reset();
+
+                while (mmInStream.available() > 0)
+                {
+                    baos.write(mmInStream.read());
+                    Thread.sleep(1);
+                }
+
+                return baos.toByteArray();
+            }
+            catch (Exception e){
+                Log.d(TAG, "read2: " + e.getMessage());
+            }
+            return new byte[1];
+        }
+
+        public int readOneByte(){
+            try{
+                return mmInStream.read();
+            }
+            catch(IOException e){
+                Log.d(TAG, "readOneByte: " + e.getMessage());
+            }
+            return -1;
         }
 
         /**
@@ -364,9 +412,6 @@ public class BluetoothService {
                 String s = "";
                 try {
                     mmInStream.read(mmBuffer);
-                    //TODO remove this testcode
-                    String result = new String(mmBuffer);
-                    Log.d(TAG, "run: " + result);
                 } catch (IOException e) {
                     Log.d(TAG, "Input stream was disconnected", e);
                     break;
@@ -383,7 +428,7 @@ public class BluetoothService {
             }
         }
 
-        // Call this method from the main activity to shut down the connection.
+        // Call this method to shut down the connection.
         public void cancel() {
             try {
                 socket.close();

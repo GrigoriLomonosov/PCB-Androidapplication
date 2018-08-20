@@ -202,4 +202,18 @@ public class DataProcessor {
         }
         return hex;
     }
+
+    /**
+     * Returns an IPv4-address based on a given array of bytes
+     * @param arr The first 4 bytes in the array are used to construct the ip
+     * @return IPv4-address
+     */
+    public String byteArrayToStringIP(byte[] arr){
+        String result = "";
+        int first = arr[0];
+        int second = arr[1];
+        int third = arr[2];
+        int fourth = arr[3];
+        return String.valueOf(first) + "." + String.valueOf(second) + "." + String.valueOf(third) + "." + String.valueOf(fourth);
+    }
 }
