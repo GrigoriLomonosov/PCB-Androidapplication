@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class BluetoothFragment extends Fragment implements
     private TextView device_address;
     private TextView bt_result_text;
     private TextView result_text;
+    private TextView set_ip_text;
     private Button connectBtn;
     private Button disconnectBtn;
     private Button readIPBtn;
@@ -81,6 +83,7 @@ public class BluetoothFragment extends Fragment implements
         device_address = (TextView) view.findViewById(R.id.device_address);
         result_text = (TextView) view.findViewById(R.id.resultText);
         bt_result_text = (TextView) view.findViewById(R.id.BT_result_text);
+        set_ip_text = (TextView) view.findViewById(R.id.setIpText);
         Spinner s = (Spinner) view.findViewById(R.id.BTSpinner);
         s.setOnItemSelectedListener(this);
         ArrayAdapter aa = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_item,bluetoothService.getDevices());
@@ -281,8 +284,8 @@ public class BluetoothFragment extends Fragment implements
      */
     private void setIP(View view){
         Log.d(TAG, "setIP: pressed");
-        String ip = result_text.getText().toString().trim();
-        result_text.setText(bluetoothService.setIP("123.123.123.132", getResources().getString(R.string.cmd_changeip)));
+        String ip = set_ip_text.getText().toString().trim();
+        result_text.setText(bluetoothService.setIP(ip, getResources().getString(R.string.cmd_changeip)));
     }
 
     /**

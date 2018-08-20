@@ -167,7 +167,7 @@ public class BluetoothService {
     public String setIP(String ip, String cmd){
         String reply = "Set IP failed: nothing happened";
         if(isConnected()){
-            if (dataProcessor.checkIPFormat(ip)){
+            if (dataProcessor.checkIPFormat(ip.trim())){
                 String processedCmd = start + cmd.replaceAll(" ", "") + dataProcessor.ip2Hex(ip) + dummies;
                 Log.d(TAG, "setIP: " + processedCmd);
                 try{
