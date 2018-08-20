@@ -1,14 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NodeControlFragment">
+    tools:context=".BluetoothFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/title_activity_test_tabbed" />
+        tools:context=".Devices">
+
+        <Button
+            android:id="@+id/setMinTimeBtn"
+            android:layout_width="157dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/min_time_set_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputText" />
+
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="157dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/readMinTimeBtn"
+            android:layout_width="156dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/min_time_read_btn"
+            app:layout_constraintStart_toEndOf="@+id/setMinTimeBtn"
+            app:layout_constraintTop_toBottomOf="@+id/outputText" />
+
+        <Button
+            android:id="@+id/setMinWeightBtn"
+            android:layout_width="159dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/min_weight_set_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setMinTimeBtn" />
+
+        <Button
+            android:id="@+id/readMinWeightBtn"
+            android:layout_width="156dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/read_min_weight_btn"
+            app:layout_constraintStart_toEndOf="@+id/setMinWeightBtn"
+            app:layout_constraintTop_toBottomOf="@+id/readMinTimeBtn" />
+
+        <TextView
+            android:id="@+id/outputText"
+            android:layout_width="168dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@+id/inputText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/setMinCompareTimeBtn"
+            android:layout_width="160dp"
+            android:layout_height="53dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/set_min_compare_time_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setMinWeightBtn" />
+
+        <Button
+            android:id="@+id/readMinCompareTimeBtn"
+            android:layout_width="156dp"
+            android:layout_height="54dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/read_compare_time_btn"
+            app:layout_constraintStart_toEndOf="@+id/setMinCompareTimeBtn"
+            app:layout_constraintTop_toBottomOf="@+id/readMinWeightBtn" />
+
+        <Button
+            android:id="@+id/setTimeStepBtn"
+            android:layout_width="160dp"
+            android:layout_height="53dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/set_time_step_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setMinCompareTimeBtn" />
+
+        <Button
+            android:id="@+id/readTimeStepBtn"
+            android:layout_width="157dp"
+            android:layout_height="51dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/read_time_step_btn"
+            app:layout_constraintStart_toEndOf="@+id/setTimeStepBtn"
+            app:layout_constraintTop_toBottomOf="@+id/readMinCompareTimeBtn" />
+
+        <Button
+            android:id="@+id/setWeightStepBtn"
+            android:layout_width="161dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/set_weight_step_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setTimeStepBtn" />
+
+        <Button
+            android:id="@+id/readWeightStepBtn"
+            android:layout_width="159dp"
+            android:layout_height="53dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/read_weight_step_btn"
+            app:layout_constraintStart_toEndOf="@+id/setWeightStepBtn"
+            app:layout_constraintTop_toBottomOf="@+id/readTimeStepBtn" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
+

@@ -155,7 +155,7 @@ public class BluetoothService {
      * @return an available ip-address
      */
     public String findFreeIP(){
-        return dataProcessor.findFreeIp();
+        return "just a testvalue" + dataProcessor.findFreeIp();
     }
 
     /**
@@ -173,6 +173,13 @@ public class BluetoothService {
                 try{
                     Log.d(TAG, "setIP: here");
                     write(processedCmd.getBytes(encoding));
+                    byte[] temp = read();
+                    if(new String(temp,encoding).contains("OKEND")){
+                        return "IP set correctly to: " + ip;
+                    }
+                    else{
+                        return "Please try again, not able to show password";
+                    }
                 }
                 catch (Exception e){
                     reply = "Could not write: " + e.getMessage();
@@ -198,11 +205,18 @@ public class BluetoothService {
         String processedCmd = start + cmd.replaceAll(" ", "");
         try{
             write(processedCmd.getBytes(encoding));
+            byte[] temp = read();
+            if(new String(temp,encoding).contains("OKEND")){
+                return "implement a method to receive password";
+            }
+            else{
+                return "Please try again, not able to show password";
+            }
         }
         catch (Exception e){
-            Log.d(TAG, "readpasword: " + e.getMessage());
+            Log.d(TAG, "password: " + e.getMessage());
         }
-        return "pasword";
+        return "Nothing received within the designated time.";
     }
 
     /**
@@ -213,11 +227,18 @@ public class BluetoothService {
         String processedCmd = start + cmd.replaceAll(" ", "");
         try{
             write(processedCmd.getBytes(encoding));
+            byte[] temp = read();
+            if(new String(temp,encoding).contains("OKEND")){
+                return "implement a method to receive a SSID";
+            }
+            else{
+                return "Please try again, SSID not received.";
+            }
         }
         catch (Exception e){
-            Log.d(TAG, "readSSID: " + e.getMessage());
+            Log.d(TAG, "ssid: " + e.getMessage());
         }
-        return "SSID";
+        return "Nothing received within the designated time.";
     }
 
     /**

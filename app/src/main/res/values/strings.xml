@@ -54,4 +54,16 @@
     <string name="cmd_readtimesteps">19 04</string>
     <string name="testBtn">Test</string>
 
+    <!--PANEL STRINGS-->
+    <string name="min_time_set_btn">Set min time</string>
+    <string name="min_time_read_btn">Read min time</string>
+    <string name="min_weight_set_btn">Set min weight</string>
+    <string name="read_min_weight_btn">Read min weight</string>
+    <string name="set_min_compare_time_btn">Set compare time</string>
+    <string name="read_compare_time_btn">Read compare time</string>
+    <string name="set_time_step_btn">Set time step</string>
+    <string name="read_time_step_btn">Read time step</string>
+    <string name="set_weight_step_btn">Set weight step</string>
+    <string name="read_weight_step_btn">Read weight step</string>
+
 </resources>
