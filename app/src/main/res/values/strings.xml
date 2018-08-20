@@ -52,5 +52,6 @@
     <string name="cmd_readweightsteps">17 04</string>
     <string name="cmd_settimesteps">18 05 %1$s</string>
     <string name="cmd_readtimesteps">19 04</string>
+    <string name="testBtn">Test</string>
 
 </resources>

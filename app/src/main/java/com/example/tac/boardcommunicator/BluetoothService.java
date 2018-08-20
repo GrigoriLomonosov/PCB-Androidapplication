@@ -244,6 +244,25 @@ public class BluetoothService {
         return "Nothing received within the designated time.";
     }
 
+    public String test(String cmd){
+        String processedCmd = start + cmd.replaceAll(" ", "");
+        try{
+            Log.d(TAG, "test: here");
+            write(processedCmd.getBytes(encoding));
+            byte[] temp = read();
+            if(new String(temp,encoding).equals("OKEND")){
+                return "Testing of device ok";
+            }
+            else{
+                return "Test failed: please try again";
+            }
+        }
+        catch(Exception e){
+            Log.d(TAG, "test: " + e.getMessage());
+        }
+        return "Nothing received within designated time";
+    }
+
     private void write(byte[] byteArr){
         connectedThreadWrite.write(byteArr);
     }

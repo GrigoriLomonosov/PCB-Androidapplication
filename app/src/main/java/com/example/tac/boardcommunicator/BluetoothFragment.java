@@ -39,9 +39,7 @@ public class BluetoothFragment extends Fragment implements
     private Button readPWBtn;
     private Button findFreeIpBtn;
     private Button setIPBtn;
-
-    // Currently connected device TODO dit kan hier wsh nog properder
-    //private BluetoothDevice device;
+    private Button testBtn;
 
     private final BluetoothService bluetoothService = BluetoothService.getInstance();
 
@@ -97,6 +95,7 @@ public class BluetoothFragment extends Fragment implements
         readPWBtn = (Button) view.findViewById(R.id.readPwBtn);
         findFreeIpBtn = (Button) view.findViewById(R.id.findFreeIP);
         setIPBtn = (Button) view.findViewById(R.id.setIP);
+        testBtn = (Button) view.findViewById(R.id.testBtn);
 
         // Set the listeners for the buttons
         connectBtn.setOnClickListener(new View.OnClickListener()
@@ -150,11 +149,17 @@ public class BluetoothFragment extends Fragment implements
             }
         });
 
+        testBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testDevice(v);
+            }
+        });
+
         super.onCreate(savedInstanceState);
 
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -263,6 +268,11 @@ public class BluetoothFragment extends Fragment implements
     private void findFreeIP(View view){
         Log.d(TAG, "findFreeIP: pressed");
         result_text.setText(bluetoothService.findFreeIP());
+    }
+
+    private void testDevice(View view){
+        Log.d(TAG, "testDevice: pressed");
+        result_text.setText(bluetoothService.test(getResources().getString(R.string.cmd_test)));
     }
 
     /**
