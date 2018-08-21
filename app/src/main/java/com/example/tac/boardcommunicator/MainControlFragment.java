@@ -20,9 +20,6 @@ import android.widget.TextView;
  */
 public class MainControlFragment extends Fragment {
 
-    private String title;
-    private int page;
-
     private OnMainSelectedListener mListener;
 
     public MainControlFragment() {
@@ -32,17 +29,11 @@ public class MainControlFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment MainControlFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static MainControlFragment newInstance(String param1, String param2) {
+    public static MainControlFragment newInstance() {
         MainControlFragment fragment = new MainControlFragment();
         Bundle args = new Bundle();
-        args.putString("someInt", param1);
-        args.putString("someTitle", param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,8 +42,7 @@ public class MainControlFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            page = getArguments().getInt("someInt");
-            title = getArguments().getString("someTitle");
+            // Do nothing, no args
         }
     }
 
@@ -62,13 +52,6 @@ public class MainControlFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_control, container, false);
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onMainSelected();
-        }
     }
 
     @Override
@@ -99,7 +82,6 @@ public class MainControlFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnMainSelectedListener {
-        // TODO: Update argument type and name
         void onMainSelected();
     }
 }

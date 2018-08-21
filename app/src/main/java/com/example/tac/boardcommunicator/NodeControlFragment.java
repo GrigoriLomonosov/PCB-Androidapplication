@@ -53,7 +53,7 @@ public class NodeControlFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      */
-    public static NodeControlFragment newInstance(String param1, String param2) {
+    public static NodeControlFragment newInstance() {
         NodeControlFragment fragment = new NodeControlFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -112,7 +112,7 @@ public class NodeControlFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                readMinTime(v);
+                setMinweight(v);
             }
         });
         readMinWeight.setOnClickListener(new View.OnClickListener()
@@ -120,7 +120,7 @@ public class NodeControlFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                readMinTime(v);
+                readMinWeight(v);
             }
         });
         setMinCompareTime.setOnClickListener(new View.OnClickListener()
@@ -128,7 +128,7 @@ public class NodeControlFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                readMinTime(v);
+                setMinCompareTime(v);
             }
         });
         readMinCompareTime.setOnClickListener(new View.OnClickListener()
@@ -136,7 +136,7 @@ public class NodeControlFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                readMinTime(v);
+                readMinCompareTime(v);
             }
         });
         setTimeStep.setOnClickListener(new View.OnClickListener()
@@ -144,7 +144,7 @@ public class NodeControlFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                readMinTime(v);
+                setTimeStep(v);
             }
         });
         readTimeStep.setOnClickListener(new View.OnClickListener()
@@ -152,7 +152,7 @@ public class NodeControlFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                readMinTime(v);
+                readTimeStep(v);
             }
         });
         setWeightStep.setOnClickListener(new View.OnClickListener()
@@ -160,7 +160,7 @@ public class NodeControlFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                readMinTime(v);
+                setWeightStep(v);
             }
         });
         readWeightStep.setOnClickListener(new View.OnClickListener()
@@ -178,46 +178,55 @@ public class NodeControlFragment extends Fragment {
     }
 
     private void setMinTime(View v){
+        bluetoothService.setMinTime();
         Log.d(TAG, "setMinTime: pressed");
     }
 
     private void readMinTime(View v){
+        bluetoothService.readMinTime();
         Log.d(TAG, "readMinTime: pressed");
     }
 
     private void setMinweight(View v){
+        bluetoothService.setMinweight();
         Log.d(TAG, "setMinweight: pressed");
     }
 
     private void readMinWeight(View v){
+        bluetoothService.readMinWeight();
         Log.d(TAG, "readMinWeight: pressed");
     }
 
     private void setMinCompareTime(View v){
+        bluetoothService.setMinCompareTime();
         Log.d(TAG, "setMinCompareTime: pressed");
     }
 
     private void readMinCompareTime(View v){
+        bluetoothService.readMinCompareTime();
         Log.d(TAG, "readMinCompareTime: pressed");
     }
 
     private void setTimeStep(View v){
+        bluetoothService.setTimeStep();
         Log.d(TAG, "setTimeStep: pressed");
     }
 
     private void readTimeStep(View v){
+        bluetoothService.readTimeStep();
         Log.d(TAG, "readTimeStep: pressed");
     }
 
     private void setWeightStep(View v){
+        bluetoothService.setWeightStep();
         Log.d(TAG, "setWeightStep: pressed");
     }
 
     private void readWeightStep(View v){
+        bluetoothService.readMinWeight();
         Log.d(TAG, "readWeightStep: presssed");
     }
-
-
+    
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

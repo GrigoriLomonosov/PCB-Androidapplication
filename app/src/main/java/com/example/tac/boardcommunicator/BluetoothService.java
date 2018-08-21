@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -150,6 +151,11 @@ public class BluetoothService {
     public boolean isConnected(){
         return connectedThreadRead != null && connectedThreadWrite != null;
     }
+
+
+    //###########################################################################################
+    //################## Write your commands to communicate below ###############################
+
 
     /**
      * Returns a free ip-address in the current network
@@ -315,6 +321,59 @@ public class BluetoothService {
         }
         return "Nothing received within designated time";
     }
+
+    public String setMinTime(){
+        //TODO implement
+        return "";
+    }
+
+    public String readMinTime(){
+        //TODO implement
+        return "";
+    }
+
+    public String setMinweight(){
+        //TODO implement
+        return "";
+    }
+
+    public String readMinWeight(){
+        //TODO implement
+        return "";
+    }
+
+    public String setMinCompareTime(){
+        //TODO implement
+        return "";
+    }
+
+    public String readMinCompareTime(){
+        //TODO implement
+        return "";
+    }
+
+    public String setTimeStep(){
+        //TODO implement
+        return "";
+    }
+
+    public String readTimeStep(){
+        //TODO implement
+        return "";
+    }
+
+    public String setWeightStep(){
+        //TODO implement
+        return "";
+    }
+
+    public String readWeightStep(){
+        //TODO implement
+        return "";
+    }
+
+    //#############################################################################
+    //#############################################################################
 
     private void write(byte[] byteArr){
         connectedThreadWrite.write(byteArr);

@@ -143,9 +143,9 @@ public class TabbedActivity extends AppCompatActivity implements BluetoothFragme
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return MainControlFragment.newInstance("","");
+                    return MainControlFragment.newInstance();
                 case 1:
-                    return NodeControlFragment.newInstance("","");
+                    return NodeControlFragment.newInstance();
                 case 2:
                     return BluetoothFragment.newInstance();
                 default:
