@@ -28,6 +28,10 @@ public class BluetoothService {
     // This string is at the start of every command. It is the hex-string representation of START
     private final String start = "5354415254";
 
+    private final byte[] startValue = new byte[]{'S','T','A','R','T'};
+
+    private final byte[] dummyBytes = new byte[]{3,3};
+
     // String representation of 2 dummy bytes
     private final String dummies = "0000";
 
@@ -111,6 +115,13 @@ public class BluetoothService {
             connectThread.run();
             connectedThreadRead = new ConnectedThread();
             connectedThreadWrite = new ConnectedThread();
+            // Test if connection is working
+            try {
+                socket.getOutputStream().write(12);
+            }
+            catch (IOException e){
+                return false;
+            }
             return true;
         }
         else{
@@ -209,21 +220,17 @@ public class BluetoothService {
      * @return
      */
     public String readPW(String cmd){
-        String processedCmd = start + cmd.replaceAll(" ", "");
+        byte[] cmdData = createByteArrayWithCmdData(cmd);
         try{
-            write(processedCmd.getBytes(encoding));
-            byte[] temp = read();
-            if(new String(temp,encoding).contains("OKEND")){
-                return "implement a method to receive password";
-            }
-            else{
-                return "Please try again, not able to show password";
-            }
+            byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, dummyBytes);
+            write(finalCmd);
+            byte[] received = read();
+            return new String(received);
         }
-        catch (Exception e){
-            Log.d(TAG, "password: " + e.getMessage());
+        catch(Exception e){
+            Log.d(TAG, "test: " + e.getMessage());
         }
-        return "Nothing received within the designated time.";
+        return "Nothing received within designated time";
     }
 
     /**
@@ -231,21 +238,17 @@ public class BluetoothService {
      * @return
      */
     public String readSSID(String cmd){
-        String processedCmd = start + cmd.replaceAll(" ", "");
+        byte[] cmdData = createByteArrayWithCmdData(cmd);
         try{
-            write(processedCmd.getBytes(encoding));
-            byte[] temp = read();
-            if(new String(temp,encoding).contains("OKEND")){
-                return "implement a method to receive a SSID";
-            }
-            else{
-                return "Please try again, SSID not received.";
-            }
+            byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, dummyBytes);
+            write(finalCmd);
+            byte[] received = read();
+            return new String(received);
         }
-        catch (Exception e){
-            Log.d(TAG, "ssid: " + e.getMessage());
+        catch(Exception e){
+            Log.d(TAG, "test: " + e.getMessage());
         }
-        return "Nothing received within the designated time.";
+        return "Nothing received within designated time";
     }
 
     /**
@@ -253,68 +256,26 @@ public class BluetoothService {
      * @return
      */
     public String readIP(String cmd){
-        String processedCmd = start + cmd.replaceAll(" ", "");
+        byte[] cmdData = createByteArrayWithCmdData(cmd);
         try{
-            Log.d(TAG, "readip: here");
-            write(processedCmd.getBytes(encoding));
-            byte[] temp = read();
-
-            byte[] temp1 = new byte[9];
-            temp1[0] = 'S';
-            temp1[1] = 'T';
-            temp1[2] = 'A';
-            temp1[3] = 'R';
-            temp1[4] = 'T';
-            temp1[5] = 9;
-            temp1[6] = 4;
-            temp1[7] = 3;
-            temp1[8] = 3;
-            write(temp1);
-            temp = read();
-
-            Log.d(TAG, "readIP: " + temp + ' ' + temp.toString());
-            return dataProcessor.byteArrayToStringIP(temp);
-
-           /* if(new String(temp,encoding).contains("OKEND")){
-                return new String(temp);
-                //return dataProcessor.byteArrayToStringIP(temp);
-            }
-            else{
-                return "Please try again, IP address not updated";
-            }*/
+            byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, dummyBytes);
+            write(finalCmd);
+            byte[] received = read();
+            return dataProcessor.byteArrayToStringIP(received);
         }
-        catch (Exception e){
-            Log.d(TAG, "readip: " + e.getMessage());
+        catch(Exception e){
+            Log.d(TAG, "test: " + e.getMessage());
         }
-        return "Nothing received within the designated time.";
+        return "Nothing received within designated time";
     }
 
     public String test(String cmd){
-        String processedCmd = start + cmd.replaceAll(" ", "");
+        byte[] cmdData = createByteArrayWithCmdData(cmd);
         try{
-            Log.d(TAG, "test: here");
-            //TODO check this code and other commands
-            byte[] temp1 = new byte[9];
-            temp1[0] = 'S';
-            temp1[1] = 'T';
-            temp1[2] = 'A';
-            temp1[3] = 'R';
-            temp1[4] = 'T';
-            temp1[5] = 1;
-            temp1[6] = 4;
-            temp1[7] = 3;
-            temp1[8] = 3;
-            write(temp1);
-            //
-            //write(processedCmd.getBytes(encoding));
-            byte[] temp = read();
-            return new String(temp);
-            /*if(new String(temp,encoding).equals("OKEND")){
-                return "Testing of device ok";
-            }
-            else{
-                return "Test failed: please try again";
-            }*/
+            byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, dummyBytes);
+            write(finalCmd);
+            byte[] received = read();
+            return new String(received);
         }
         catch(Exception e){
             Log.d(TAG, "test: " + e.getMessage());
@@ -394,6 +355,14 @@ public class BluetoothService {
 
     //#############################################################################
     //#############################################################################
+
+    private byte[] createByteArrayWithCmdData(String cmd){
+        String[] processedCmd = cmd.split(" ");
+        int cmdNumber = Integer.valueOf(processedCmd[0].trim());
+        int lengthOfCmd = Integer.valueOf(processedCmd[1].trim());
+        byte[] cmdData = new byte[]{(byte)cmdNumber,(byte)lengthOfCmd};
+        return cmdData;
+    }
 
     private void write(byte[] byteArr){
         connectedThreadWrite.write(byteArr);

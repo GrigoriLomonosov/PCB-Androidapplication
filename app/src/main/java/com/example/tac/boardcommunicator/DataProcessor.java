@@ -3,8 +3,10 @@ package com.example.tac.boardcommunicator;
 import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -138,10 +140,24 @@ public class DataProcessor {
     public String byteArrayToStringIP(byte[] arr){
         String result = "";
         //TODO adjust to unsigned integer
-        long first = arr[0];
-        long second = arr[1];
-        long third = arr[2];
-        long fourth = arr[3];
+        int first = arr[0];
+        int second = arr[1];
+        int third = arr[2];
+        int fourth = arr[3];
         return String.valueOf(first) + "." + String.valueOf(second) + "." + String.valueOf(third) + "." + String.valueOf(fourth);
+    }
+
+    public byte[] concatByteArrays(byte[] arr1, byte[] arr2, byte[] arr3){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+        try {
+            outputStream.write( arr1 );
+            outputStream.write( arr2 );
+            outputStream.write( arr3 );
+        }
+        catch (IOException e){
+            Log.d("", "concatByteArrays: " + e.getMessage());
+        }
+
+        return outputStream.toByteArray( );
     }
 }
