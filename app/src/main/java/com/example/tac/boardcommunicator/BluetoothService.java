@@ -269,14 +269,28 @@ public class BluetoothService {
         String processedCmd = start + cmd.replaceAll(" ", "");
         try{
             Log.d(TAG, "test: here");
-            write(processedCmd.getBytes(encoding));
+            //TODO check this code and other commands
+            byte[] temp1 = new byte[9];
+            temp1[0] = 'S';
+            temp1[1] = 'T';
+            temp1[2] = 'A';
+            temp1[3] = 'R';
+            temp1[4] = 'T';
+            temp1[5] = 1;
+            temp1[6] = 4;
+            temp1[7] = 3;
+            temp1[8] = 3;
+            write(temp1);
+            //
+            //write(processedCmd.getBytes(encoding));
             byte[] temp = read();
-            if(new String(temp,encoding).equals("OKEND")){
+            return new String(temp);
+            /*if(new String(temp,encoding).equals("OKEND")){
                 return "Testing of device ok";
             }
             else{
                 return "Test failed: please try again";
-            }
+            }*/
         }
         catch(Exception e){
             Log.d(TAG, "test: " + e.getMessage());
