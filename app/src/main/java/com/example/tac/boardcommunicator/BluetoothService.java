@@ -20,6 +20,7 @@ import java.util.UUID;
 
 public class BluetoothService {
 
+    //TODO adjust with start value
     //TODO Remove: testfield for logging
     private String TAG = "test";
 
@@ -251,13 +252,30 @@ public class BluetoothService {
             Log.d(TAG, "readip: here");
             write(processedCmd.getBytes(encoding));
             byte[] temp = read();
+
+            byte[] temp1 = new byte[9];
+            temp1[0] = 'S';
+            temp1[1] = 'T';
+            temp1[2] = 'A';
+            temp1[3] = 'R';
+            temp1[4] = 'T';
+            temp1[5] = 9;
+            temp1[6] = 4;
+            temp1[7] = 3;
+            temp1[8] = 3;
+            write(temp1);
+            temp = read();
+
             Log.d(TAG, "readIP: " + temp + ' ' + temp.toString());
-            if(new String(temp,encoding).contains("OKEND")){
-                return dataProcessor.byteArrayToStringIP(temp);
+            return dataProcessor.byteArrayToStringIP(temp);
+
+           /* if(new String(temp,encoding).contains("OKEND")){
+                return new String(temp);
+                //return dataProcessor.byteArrayToStringIP(temp);
             }
             else{
                 return "Please try again, IP address not updated";
-            }
+            }*/
         }
         catch (Exception e){
             Log.d(TAG, "readip: " + e.getMessage());

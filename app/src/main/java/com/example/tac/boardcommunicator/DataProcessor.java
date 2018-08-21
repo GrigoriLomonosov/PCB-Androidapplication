@@ -33,6 +33,7 @@ public class DataProcessor {
      * @return true if correct IPv4 string, false otherwise
      */
     public boolean checkIPFormat(String ip){
+        //TODO implement
         return true;
     }
 
@@ -72,6 +73,7 @@ public class DataProcessor {
 
         // Find first free one
         if(ipList.isEmpty()){
+            //TODO how to handle this
             return "198.162.1.1";
         }
         return findFirstFreeInList(ipList);
@@ -80,109 +82,6 @@ public class DataProcessor {
     private String findFirstFreeInList(List<String>list){
         //TODO implement
         return list.get(0);
-    }
-
-   /* public Map<String, String> createArpMap() throws IOException, InterruptedException {
-        checkMapARP.clear();
-        BufferedReader localBufferdReader = new BufferedReader(new FileReader(new File("/proc/net/arp")));
-        String line = "";
-        while ((line = localBufferdReader.readLine()) == null) {
-            localBufferdReader.close();
-            Thread.sleep(1000);
-            localBufferdReader = new BufferedReader(new FileReader(new File("/proc/net/arp")));
-        }
-        do {
-            String[] ipmac = line.split("[ ]+");
-            if (!ipmac[0].matches("IP")) {
-                String ip = ipmac[0];
-                String mac = ipmac[3];
-                if (!checkMapARP.containsKey(ip)) {
-                    checkMapARP.put(ip, mac);
-                }
-            }
-        } while ((line = localBufferdReader.readLine()) != null);
-        return Collections.unmodifiableMap(checkMapARP);
-    }
-
-    public String toRead()
-    {
-        ProcessBuilder cmd;
-        String result="";
-
-        try{
-            cmd = new ProcessBuilder(args);
-
-            Process process = cmd.start();
-            InputStream in = process.getInputStream();
-            byte[] re = new byte[1024];
-            //TESTCODE
-            re[0] = 1;
-            while(in.read(re) != -1){
-                //System.out.println(new String(re,  "UTF-8"));
-                System.out.println(re[1]);
-                result = result + new String(re);
-            }
-            in.close();
-        } catch(IOException ex){
-            ex.printStackTrace();
-        }
-        return result;
-    }*/
-
-    public void methode4(){
-        /*String   s_dns1 ;
-        String   s_dns2;
-        String   s_gateway;
-        String   s_ipAddress;
-        String   s_leaseDuration;
-        String   s_netmask;
-        String   s_serverAddress;
-        DhcpInfo d;
-        WifiManager wifii;
-
-        wifii = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        d = wifii.getDhcpInfo();
-
-        s_dns1 = "DNS 1: " + String.valueOf(d.dns1);
-        s_dns2 = "DNS 2: " + String.valueOf(d.dns2);
-        s_gateway = "Default Gateway: " + String.valueOf(d.gateway);
-        s_ipAddress = "IP Address: " + String.valueOf(d.ipAddress);
-        s_leaseDuration = "Lease Time: " + String.valueOf(d.leaseDuration);
-        s_netmask = "Subnet Mask: " + String.valueOf(d.netmask);
-        s_serverAddress = "Server IP: " + String.valueOf(d.serverAddress);
-
-        String connections = "";
-        InetAddress host;
-        try
-        {
-            host = InetAddress.getByName(intToIp(d.dns1));
-            byte[] ip = host.getAddress();
-
-            for(int i = 1; i <= 254; i++)
-            {
-                ip[3] = (byte) i;
-                InetAddress address = InetAddress.getByAddress(ip);
-                if(address.isReachable(100))
-                {
-                    System.out.println(address + " machine is turned on and can be pinged");
-                    connections+= address+"\n";
-                }
-                else if(!address.getHostAddress().equals(address.getHostName()))
-                {
-                    System.out.println(address + " machine is known in a DNS lookup");
-                }
-
-            }
-        }
-        catch(UnknownHostException e1)
-        {
-            e1.printStackTrace();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-        System.out.println(connections);*/
     }
 
     public String intToIp(int i) {
@@ -238,10 +137,11 @@ public class DataProcessor {
      */
     public String byteArrayToStringIP(byte[] arr){
         String result = "";
-        int first = arr[0];
-        int second = arr[1];
-        int third = arr[2];
-        int fourth = arr[3];
+        //TODO adjust to unsigned integer
+        long first = arr[0];
+        long second = arr[1];
+        long third = arr[2];
+        long fourth = arr[3];
         return String.valueOf(first) + "." + String.valueOf(second) + "." + String.valueOf(third) + "." + String.valueOf(fourth);
     }
 }
