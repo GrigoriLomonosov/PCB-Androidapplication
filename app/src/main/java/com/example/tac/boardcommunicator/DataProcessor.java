@@ -139,11 +139,10 @@ public class DataProcessor {
      */
     public String byteArrayToStringIP(byte[] arr){
         String result = "";
-        //TODO adjust to unsigned integer
-        int first = arr[0];
-        int second = arr[1];
-        int third = arr[2];
-        int fourth = arr[3];
+        int first = arr[0]  & 0xFF;;
+        int second = arr[1]  & 0xFF;;
+        int third = arr[2]  & 0xFF;;
+        int fourth = arr[3]  & 0xFF;;
         return String.valueOf(first) + "." + String.valueOf(second) + "." + String.valueOf(third) + "." + String.valueOf(fourth);
     }
 

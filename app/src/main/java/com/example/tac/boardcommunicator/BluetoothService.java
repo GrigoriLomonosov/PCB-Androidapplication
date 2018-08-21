@@ -183,6 +183,7 @@ public class BluetoothService {
      * @return a string holding a response from the device
      */
     public String setIP(String ip, String cmd){
+        //TODO check
         String reply = "Set IP failed: nothing happened";
         if(isConnected()){
             if (dataProcessor.checkIPFormat(ip.trim())){
