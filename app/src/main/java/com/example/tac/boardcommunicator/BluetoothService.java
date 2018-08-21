@@ -372,6 +372,26 @@ public class BluetoothService {
         return "";
     }
 
+    public String updateDate(){
+        //TODO implement
+        return "";
+    }
+
+    public String updateTime(){
+        //TODO implement
+        return "";
+    }
+
+    public String updateVolume(){
+        //TODO implement
+        return "";
+    }
+
+    public String uploadSoundFile(){
+        //TODO implement
+        return "";
+    }
+
     //#############################################################################
     //#############################################################################
 
