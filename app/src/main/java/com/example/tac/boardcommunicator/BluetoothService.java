@@ -183,37 +183,18 @@ public class BluetoothService {
      * @return a string holding a response from the device
      */
     public String setIP(String ip, String cmd){
-        //TODO check
-        String reply = "Set IP failed: nothing happened";
-        if(isConnected()){
-            if (dataProcessor.checkIPFormat(ip.trim())){
-                String processedCmd = start + cmd.replaceAll(" ", "") + dataProcessor.ip2Hex(ip) + dummies;
-                Log.d(TAG, "setIP: " + processedCmd);
-                try{
-                    Log.d(TAG, "setIP: here");
-                    write(processedCmd.getBytes(encoding));
-                    byte[] temp = read();
-                    if(new String(temp,encoding).contains("OKEND")){
-                        return "IP set correctly to: " + ip;
-                    }
-                    else{
-                        return "Please try again, not able to show password";
-                    }
-                }
-                catch (Exception e){
-                    reply = "Could not write: " + e.getMessage();
-                    Log.d(TAG, "setIP: " + e.getMessage());
-                }
-                reply = "Set IP succeeded";
-            }
-            else{
-                reply = "IP is not in the correct format";
-            }
+        if (dataProcessor.checkIPFormat(ip)){
+            byte[] ipBytes = dataProcessor.StringToByteArrayIP(ip);
+            byte[] cmdData = createByteArrayWithCmdData(cmd);
+            byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, ipBytes);
+            finalCmd = dataProcessor.concatByteArrays(finalCmd, dummyBytes, new byte[0]);
+            write(finalCmd);
+            byte[] received = read();
+            return new String(received);
         }
-        else{
-            reply = "Connect a device before changing the IP";
+        else {
+            return "IP in incorrect format";
         }
-        return reply;
     }
 
     /**
@@ -221,17 +202,7 @@ public class BluetoothService {
      * @return
      */
     public String readPW(String cmd){
-        byte[] cmdData = createByteArrayWithCmdData(cmd);
-        try{
-            byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, dummyBytes);
-            write(finalCmd);
-            byte[] received = read();
-            return new String(received);
-        }
-        catch(Exception e){
-            Log.d(TAG, "test: " + e.getMessage());
-        }
-        return "Nothing received within designated time";
+        return askForARead(cmd);
     }
 
     /**
@@ -239,17 +210,7 @@ public class BluetoothService {
      * @return
      */
     public String readSSID(String cmd){
-        byte[] cmdData = createByteArrayWithCmdData(cmd);
-        try{
-            byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, dummyBytes);
-            write(finalCmd);
-            byte[] received = read();
-            return new String(received);
-        }
-        catch(Exception e){
-            Log.d(TAG, "test: " + e.getMessage());
-        }
-        return "Nothing received within designated time";
+        return askForARead(cmd);
     }
 
     /**
@@ -271,12 +232,88 @@ public class BluetoothService {
     }
 
     public String test(String cmd){
+        return askForARead(cmd);
+    }
+
+    public String setMinTime(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String readMinTime(String cmd){
+        return askForARead(cmd);
+    }
+
+    public String setMinweight(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String readMinWeight(String cmd){
+        return askForARead(cmd);
+    }
+
+    public String setMinCompareTime(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String readMinCompareTime(String cmd){
+        return askForARead(cmd);
+    }
+
+    public String setTimeStep(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String readTimeStep(String cmd){
+        return askForARead(cmd);
+    }
+
+    public String setWeightStep(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String readWeightStep(String cmd){
+        return askForARead(cmd);
+    }
+
+    public String updateDate(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String updateTime(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String updateVolume(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    public String uploadSoundFile(String cmd){
+        //TODO implement
+        return "";
+    }
+
+    //#############################################################################
+    //#############################################################################
+
+    private String askForARead(String cmd){
         byte[] cmdData = createByteArrayWithCmdData(cmd);
         try{
             byte[] finalCmd = dataProcessor.concatByteArrays(startValue, cmdData, dummyBytes);
             write(finalCmd);
             byte[] received = read();
-            return new String(received);
+            String result = new String(received);
+            if (result.isEmpty()){
+                return "Received nothing";
+            }
+            return result;
         }
         catch(Exception e){
             Log.d(TAG, "test: " + e.getMessage());
@@ -284,81 +321,9 @@ public class BluetoothService {
         return "Nothing received within designated time";
     }
 
-    public String setMinTime(){
-        //TODO implement
-        return "";
-    }
-
-    public String readMinTime(){
-        //TODO implement
-        return "";
-    }
-
-    public String setMinweight(){
-        //TODO implement
-        return "";
-    }
-
-    public String readMinWeight(){
-        //TODO implement
-        return "";
-    }
-
-    public String setMinCompareTime(){
-        //TODO implement
-        return "";
-    }
-
-    public String readMinCompareTime(){
-        //TODO implement
-        return "";
-    }
-
-    public String setTimeStep(){
-        //TODO implement
-        return "";
-    }
-
-    public String readTimeStep(){
-        //TODO implement
-        return "";
-    }
-
-    public String setWeightStep(){
-        //TODO implement
-        return "";
-    }
-
-    public String readWeightStep(){
-        //TODO implement
-        return "";
-    }
-
-    public String updateDate(){
-        //TODO implement
-        return "";
-    }
-
-    public String updateTime(){
-        //TODO implement
-        return "";
-    }
-
-    public String updateVolume(){
-        //TODO implement
-        return "";
-    }
-
-    public String uploadSoundFile(){
-        //TODO implement
-        return "";
-    }
-
-    //#############################################################################
-    //#############################################################################
-
     private byte[] createByteArrayWithCmdData(String cmd){
         String[] processedCmd = cmd.split(" ");
+        //TODO check for numberformatException for strings that are in hex-format!!!
         int cmdNumber = Integer.valueOf(processedCmd[0].trim());
         int lengthOfCmd = Integer.valueOf(processedCmd[1].trim());
         byte[] cmdData = new byte[]{(byte)cmdNumber,(byte)lengthOfCmd};

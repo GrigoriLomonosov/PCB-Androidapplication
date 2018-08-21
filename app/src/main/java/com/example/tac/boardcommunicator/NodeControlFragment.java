@@ -178,52 +178,52 @@ public class NodeControlFragment extends Fragment {
     }
 
     private void setMinTime(View v){
-        bluetoothService.setMinTime();
+        bluetoothService.setMinTime(getResources().getString(R.string.cmd_setminweighttime));
         Log.d(TAG, "setMinTime: pressed");
     }
 
     private void readMinTime(View v){
-        bluetoothService.readMinTime();
+        bluetoothService.readMinTime(getResources().getString(R.string.cmd_readminweighttime));
         Log.d(TAG, "readMinTime: pressed");
     }
 
     private void setMinweight(View v){
-        bluetoothService.setMinweight();
+        bluetoothService.setMinweight(getResources().getString(R.string.cmd_setminweight));
         Log.d(TAG, "setMinweight: pressed");
     }
 
     private void readMinWeight(View v){
-        bluetoothService.readMinWeight();
+        bluetoothService.readMinWeight(getResources().getString(R.string.cmd_readminweight));
         Log.d(TAG, "readMinWeight: pressed");
     }
 
     private void setMinCompareTime(View v){
-        bluetoothService.setMinCompareTime();
+        bluetoothService.setMinCompareTime(getResources().getString(R.string.cmd_setmincomparetime));
         Log.d(TAG, "setMinCompareTime: pressed");
     }
 
     private void readMinCompareTime(View v){
-        bluetoothService.readMinCompareTime();
+        bluetoothService.readMinCompareTime(getResources().getString(R.string.cmd_readmincomparetime));
         Log.d(TAG, "readMinCompareTime: pressed");
     }
 
     private void setTimeStep(View v){
-        bluetoothService.setTimeStep();
+        bluetoothService.setTimeStep(getResources().getString(R.string.cmd_settimesteps));
         Log.d(TAG, "setTimeStep: pressed");
     }
 
     private void readTimeStep(View v){
-        bluetoothService.readTimeStep();
+        bluetoothService.readTimeStep(getResources().getString(R.string.cmd_readtimesteps));
         Log.d(TAG, "readTimeStep: pressed");
     }
 
     private void setWeightStep(View v){
-        bluetoothService.setWeightStep();
+        bluetoothService.setWeightStep(getResources().getString(R.string.cmd_setweightsteps));
         Log.d(TAG, "setWeightStep: pressed");
     }
 
     private void readWeightStep(View v){
-        bluetoothService.readMinWeight();
+        bluetoothService.readMinWeight(getResources().getString(R.string.cmd_readweightsteps));
         Log.d(TAG, "readWeightStep: presssed");
     }
     

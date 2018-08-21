@@ -146,6 +146,37 @@ public class DataProcessor {
         return String.valueOf(first) + "." + String.valueOf(second) + "." + String.valueOf(third) + "." + String.valueOf(fourth);
     }
 
+    /**
+     * A byte array is returned which contains the 4 bytes from a given IPv4 address in string format
+     * @param ip
+     * @return
+     */
+    public byte[] StringToByteArrayIP(String ip){
+        String[] splitted = ip.trim().split("\\.");
+        try {
+            int first = Integer.valueOf(splitted[0]);
+            int second = Integer.valueOf(splitted[1]);
+            int third = Integer.valueOf(splitted[2]);
+            int fourth = Integer.valueOf(splitted[3]);
+            return new byte[]{
+                    (byte)first ,
+                    (byte)second ,
+                    (byte)third ,
+                    (byte) fourth
+            };
+        }
+        catch (NumberFormatException e){
+            return new byte[]{0,0,0,0};
+        }
+    }
+
+    /**
+     * Returns a new bytearray containing all elements of the given byte arrays.
+     * @param arr1
+     * @param arr2
+     * @param arr3
+     * @return
+     */
     public byte[] concatByteArrays(byte[] arr1, byte[] arr2, byte[] arr3){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
         try {

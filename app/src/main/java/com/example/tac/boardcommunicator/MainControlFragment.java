@@ -117,22 +117,22 @@ public class MainControlFragment extends Fragment {
     }
 
     private void updateDate(View view){
-        bluetoothService.updateDate();
+        bluetoothService.updateDate(getResources().getString(R.string.cmd_update_date));
         Log.d(TAG, "updateDate: pressed");
     }
 
     private void updateTime(View view){
-        bluetoothService.updateTime();
+        bluetoothService.updateTime(getResources().getString(R.string.cmd_update_time));
         Log.d(TAG, "updateTime: pressed");
     }
 
     private void updateVolume(View view){
-        bluetoothService.updateVolume();
+        bluetoothService.updateVolume(getResources().getString(R.string.cmd_update_volume));
         Log.d(TAG, "updateVolume: pressed");
     }
 
     private void uploadSoundFile(View view){
-        bluetoothService.uploadSoundFile();
+        bluetoothService.uploadSoundFile(getResources().getString(R.string.cmd_upload_file));
         Log.d(TAG, "uploadSoundFile: pressed");
     }
 
